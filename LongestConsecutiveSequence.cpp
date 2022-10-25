@@ -15,7 +15,7 @@ public:
                 if(nums[i]==nums[i-1]+1){
                     count++;
                 }
-                //resets the count if it's not
+                //resets the count if it's not.
                 else{
                     ans = max(count, ans);
                     count = 1;
