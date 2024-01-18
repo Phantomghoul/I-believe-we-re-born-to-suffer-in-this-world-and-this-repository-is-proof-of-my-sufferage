@@ -1,0 +1,121 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <cassert>
+#include <fstream>
+#include <math.h>
+#include <stdio.h>
+#include <utility>
+#include <stack>
+#include <algorithm>
+#include <map>
+#include <iomanip>
+#include <cstring>
+#include <queue>
+#include <cctype>
+#include <bits/stdc++.h>
+#include <fstream>
+#include <unordered_map>
+#include <unordered_set>
+#include <cmath>
+#include <list>
+#include <climits>
+using namespace std;
+#define endl "\n"
+#define all(x) (x).begin(), (x).end()
+#define FAST ios_base::sync_with_stdio(false); cin.tie(0);
+#define sz(x) (int)x.size()
+#define vi vector<int>
+#define in(a,b)  ( (b).find(a) != (b).end())
+#define rep(i,a,b)  for(int i=a;i<b;i++)
+#define trav(a, x) for (auto& a : x)
+#define vll vector<ll>
+#define pb push_back
+#define fi first
+#define se second
+typedef long long int ll;
+
+// (づ°ω°)づﾐ★゜・。。・゜゜・。。・゜☆゜・。。・゜゜・。。・゜゜・。。・゜・。。・゜☆゜・。。・゜゜・。。・゜゜・。。・゜☆゜・。。・゜゜・。。・゜゜・。。・゜・。。・゜☆゜・。。・゜゜・。。・゜゜・。。・゜☆゜・。。・゜゜・。。・゜゜・。。・゜・。。・゜☆゜・。。・゜゜・。。・゜゜・。
+//        .==.        .==.
+//       //`^\\      //^`\\
+//      // ^ ^\(\__/)/^ ^^\\
+//     //^ ^^ ^/6  6\ ^^ ^ \\
+//    //^ ^^ ^/( .. )\^ ^ ^ \\
+//   // ^^ ^/\| v""v |/\^ ^ ^\\
+//  // ^^/\/ /  `~~`  \ \/\^ ^\\
+//  -----------------------------
+
+void setIO(string s = ""){
+    FAST
+    if(sz(s)){
+        freopen((s + ".in").c_str(), "r", stdin);
+        freopen((s + ".out").c_str(), "w", stdout);
+
+    }
+}
+
+void solve() {
+    int n; cin>>n;
+    vll a(n),b(n);
+    rep(i,0,n)cin>>a[i];
+    rep(i,0,n)cin>>b[i];
+
+    vll res;
+
+    res.pb(b[0]-a[0]);
+    rep(i,1,n){
+        res.pb(b[i] - max(b[i-1], a[i]) );
+    }
+
+    trav(t, res) cout<<t<<" ";
+    cout<<endl;
+
+}
+
+signed main(){
+    // this gives you the run speed for the program
+    auto begin = std::chrono::high_resolution_clock::now();
+    setIO();
+    int tc = 1;
+    cin>>tc;
+    while(tc--)solve();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    cerr << setprecision(4) << fixed<<endl;
+    cerr << "Execution time: " << std::chrono::duration_cast<std::chrono::duration<double>>(end - begin).count() << " seconds" << endl;
+}
+
+/*
+    ! stuff you should look for
+        * int overflow, array bounds
+        * special cases (n=1)?
+        * boundary cases
+        * do something instead of nothing and stay organized.
+        # BELIEVE in yourself.
+*/
+/*
+Objective: To find the duration of each tasks
+
+Input: We're given the time task i was given to us and also the time we finish the task
+
+Observations: 
+- The duration of the very first tasks is simply end[i] - start[i]
+
+- The upper-bound for every single duration is at most end[i] - start[i]
+      We know that the total time task i was given is from start[i] to end[i]
+
+Questions to consider
+- How can we tell when two task overlap with each other?
+  We know each task starting time comes after another (start[i] < start[i+1] < start[n])
+  One way of knowing is to simply check if the previous task finish time is greater than the start time (prev > start)
+
+- How do we know the time difference between two tasks that ovverlap with each other?
+    We well know that the upper-bound of each tasks is simply the total duration (end[i] - start[i]), we also know the finish time of each task is greater than the other (finish[i] < finish[i+1]). 
+    We also we can check whether they overlap with each other by checking (prev > start). 
+    But notice that if they overlap, the starting time isn't start[i] but instead prev. meaning the duration of task [i] is instead end[i] - prev instead of end[i] - start[i].
+    The time the task finishes always stays the same meanwhile the starting time varies based off when tasks overlap with the previous task. 
+    To simply find the starting time we can simply just check whether prev > start or get thee max(prev, start[i]).
+    The total duration for each task is therefore end[i] - max(prev, start[i]) for each tasks.
+
+*/
