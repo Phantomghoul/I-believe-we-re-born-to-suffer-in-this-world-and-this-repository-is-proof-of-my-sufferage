@@ -221,5 +221,3 @@ disciple is freedom
        - Finish the sub-problem before jumping to the next
        - do things that you don't feel like doing, the real glory lies over there
 */
-
- 
